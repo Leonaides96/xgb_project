@@ -26,3 +26,45 @@ prediction = [round(v) for v in y_pred] # if the rounding is necessary
 # accurancy checking
 from sklearn.metrics import accuracy_score
 accuracy_score = accuracy_score(y_test, prediction)
+
+###############################################################################################################################################################################################################################################################
+## This is where part from the ChatGPT
+import pandas as pd
+from xgboost import XGBRegressor
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
+
+# Step 1: Data Preparation
+# Load your time series data into a pandas DataFrame and perform necessary data cleaning.
+
+# Step 2: Feature Engineering
+# Create lag features and additional relevant features.
+
+# Step 3: Train-Test Split
+# Split the data into training and testing sets.
+
+# Step 4: XGBoost Model Setup
+model = XGBRegressor(objective='reg:squarederror', n_estimators=100, learning_rate=0.1, max_depth=3)
+
+# Step 5: Parameter Tuning (Optional)
+# Tune hyperparameters using grid search or randomized search.
+
+# Step 6: Model Training
+model.fit(X_train, y_train)
+
+# Step 7: Model Evaluation
+y_pred = model.predict(X_test)
+mse = mean_squared_error(y_test, y_pred)
+print(f'Mean Squared Error: {mse}')
+
+# Step 8: Hyperparameter Tuning (Optional)
+
+# Step 9: Make Predictions (Optional)
+# Predict on future time points or unseen data.
+
+# Step 10: Visualization
+plt.plot(y_test.index, y_test, label='Actual')
+plt.plot(y_test.index, y_pred, label='Predicted')
+plt.legend()
+plt.show()
+
