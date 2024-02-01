@@ -8,8 +8,8 @@ data = pd.read_csv("titanic.csv")
 # data cleaning, dropna or filling
 
 # target and input 
-x = ...
 y = ... 
+x = ...
 
 # train and split ()
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, train_size=0.8, random_state=)
@@ -68,3 +68,4 @@ plt.plot(y_test.index, y_pred, label='Predicted')
 plt.legend()
 plt.show()
 
+########################################################
