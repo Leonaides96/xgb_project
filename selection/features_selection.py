@@ -2,8 +2,11 @@
 from sklearn.datasets import make_classification
 from sklearn.feature_selection import RFECV
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import StratifiedKFold, TimeSeriesSplit
+from sklearn.model_selection import TimeSeriesSplit
+from sklearn.pipeline import make_pipeline
 import matplotlib.pyplot as plt
+import pandas as pd
+
 
 X, y = make_classification(
     n_samples=500,
@@ -16,11 +19,26 @@ X, y = make_classification(
     class_sep=0.8,
     random_state=0,
 )
+X = pd.DataFrame(X)
+y= pd.Series(y)
 
 #%%
+cv = TimeSeriesSplit(n_splits=5, max_train_size=30)
 min_features_to_select = 1  # Minimum number of features to consider
 clf = LogisticRegression()
-cv = TimeSeriesSplit()
+
+for train_index, test_index in cv.split(X,y):
+    print(train_index)
+
+    X_window = X.iloc[train_index]
+    y_window = y.iloc[train_index]
+
+    processor = make_pipeline(RFECV(estimator=clf, step=1, cv=cv, scoring="neg_mean_squared_error", min_features_to_select=min_features_to_select, n_jobs=2, ))
+    processor.fit(X_window, y_window)
+
+
+#%%
+
 
 rfecv = RFECV(
     estimator=clf,
